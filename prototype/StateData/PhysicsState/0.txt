@@ -1,0 +1,8 @@
+<Character>
+670,600,100,200,T
+<Static Objects>
+0,680,100000,200,T
+<Enemies>
+<Foreground>
+<Background>
+0,-0.7,3,3,low poly landscape.png
