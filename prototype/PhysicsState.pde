@@ -50,7 +50,7 @@ private class PhysicsState extends State{
           i.checkCollision(k);
       }
       if (i == player.getBox()){
-          i.checkRespawn();
+          player.getBox().checkRespawn();
       }
       i.render();
     }
