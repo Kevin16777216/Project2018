@@ -97,6 +97,7 @@
       Movement.x = 0;
       Movement.y =  0;
       sys.center = 0.0;
+      sys.Camera.x =  -(TR.x - 630);
       Center = new PVector(TR.x + (Dimensions.x /2),TR.y + (Dimensions.y /2));
     }
   }

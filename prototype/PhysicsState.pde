@@ -1,6 +1,6 @@
 private class PhysicsState extends State{
   ArrayList<Box> SolidObjects = new ArrayList<Box>();
-  public Box hitBox;
+  public Player player;
   public ArrayList<Box> ObservingObjects = new ArrayList<Box>();
   public ArrayList<Box> MovingObjects = new ArrayList<Box>();
   PImage background;
@@ -9,6 +9,7 @@ private class PhysicsState extends State{
   String BackgroundFile = "low poly landscape.png";
   PVector BackgroundShift = new PVector(0,-0.7);
   PGraphics Middleground = createGraphics(width,height);
+  PGraphics Foreground = createGraphics(width,height);
   public PVector Camera = new PVector(0,0);
   float center = 0.0;
   String[] fileData;
@@ -48,20 +49,22 @@ private class PhysicsState extends State{
       for( Box k : ObservingObjects){
           i.checkCollision(k);
       }
-      i.checkRespawn();
+      if (i == player.getBox()){
+          i.checkRespawn();
+      }
       i.render();
     }
-    float j = (hitBox.TR.x+center+(hitBox.Dimensions.x/2) - width/2.0 );
+    float j = (player.getBox().TR.x+center+(player.getBox().Dimensions.x/2) - width/2.0 );
     if(abs(j) > width / 8.0){//TODO: replace width/8 with any ratio.
       if (j > 0){
-              Camera.x =  -(hitBox.TR.x - 630)+j+(hitBox.Dimensions.x/2);
+              Camera.x =  -(player.getBox().TR.x - 630)+j+(player.getBox().Dimensions.x/2);
               center -= j - (width / 8);
       }else{
-              Camera.x =  -(hitBox.TR.x - 630)+j+(hitBox.Dimensions.x/2);
+              Camera.x =  -(player.getBox().TR.x - 630)+j+(player.getBox().Dimensions.x/2);
               center -= j + (width / 8);
       }
     }
-    Camera.y = -(hitBox.TR.y - 500);
+    Camera.y = -(player.getBox().TR.y - 500);
     popMatrix();
     Middleground.endDraw();
   }
@@ -77,7 +80,7 @@ private class PhysicsState extends State{
     for(int i = 0; i < 1; i++){
       MovingObjects.add(new Box(new PVector(width/2 - 50,600-(i*200)),new PVector(100,200),true,this));
     }
-    hitBox = MovingObjects.get(0);
+    player = new Player(MovingObjects.get(0));
   }
   private void loadData(int p){
     String a = Integer.toString(p);
@@ -103,7 +106,7 @@ private class PhysicsState extends State{
     BackgroundScale = new PVector( int(DaDAB[2]), int(DaDAB[3]));
     background.resize(width*int(BackgroundScale.x), height*int(BackgroundScale.y));
     
-    hitBox = MovingObjects.get(0);
+    player = new Player(MovingObjects.get(0));
     
   }
 }
