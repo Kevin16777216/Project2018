@@ -6,7 +6,7 @@ private class PhysicsState extends State{
   PImage background;
   PGraphics Background = createGraphics(width,height);
   PVector BackgroundScale = new PVector(3,3);
-  String BackgroundFile = "low poly landscape.png";
+  String BackgroundFile = "/Images/low poly landscape.png";
   PVector BackgroundShift = new PVector(0,-0.7);
   PGraphics Middleground = createGraphics(width,height);
   PGraphics Foreground = createGraphics(width,height);
@@ -101,7 +101,7 @@ private class PhysicsState extends State{
     }
     String[] DaDAB = fileData[i+1].split(",");
     BackgroundFile = DaDAB[4];
-    background = loadImage(BackgroundFile);
+    background = loadImage("/Images/" + BackgroundFile);
     BackgroundShift = new PVector( float(DaDAB[0]),float( DaDAB[1]));
     BackgroundScale = new PVector( int(DaDAB[2]), int(DaDAB[3]));
     background.resize(width*int(BackgroundScale.x), height*int(BackgroundScale.y));
