@@ -13,4 +13,7 @@ private class State{
     parent.endState(this);
     parent.addState(scene);
   }
+  private void addParallel(int scene){
+    parent.addState(scene);
+  }
 }

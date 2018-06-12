@@ -1,4 +1,4 @@
-private class LoadingState extends State{
+private class LoadingState extends State{//TODO: rename to listenState, as this state controls which scenes goes before and after others.
   boolean canPass = true;
   int sceneID = 0;
   public LoadingState(MainState k, int sceneLoad){

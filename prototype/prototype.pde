@@ -54,7 +54,8 @@ public class MainState{
         Processes.add(new PhysicsState(this,0));
       case LOADING:
         Processes.add(new LoadingState(this,0));
-        println("k");
+      case UI:
+        Processes.add(new UIState(this,0));
     }
     update();
   }
@@ -102,7 +103,7 @@ public class MainState{
 }
 
 enum gameState{
-   LOADING,INTRO,CUTSCENE,PHYSICS;
+   LOADING,INTRO,CUTSCENE,PHYSICS,UI;
 }
 void keyPressed(){
   if (keyCode == UP){
