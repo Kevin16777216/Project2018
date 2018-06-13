@@ -1,17 +1,19 @@
- private class Box extends Physical{
+private class Box extends Physical{
   PVector TR;
   PVector OG;
   PVector Dimensions;
   PVector Center;
   PVector Movement = new PVector(0,0);
   PhysicsState sys;
+  PShape box;
   public Box(PVector TR, PVector Dimensions, boolean Solid, PhysicsState sys){
     this.TR = TR;
     this.sys = sys;
     this.OG = TR;
     this.Dimensions = Dimensions;
     this.Solid = Solid;
-    Movement.y = 0; 
+    Movement.y = 0;
+    setShape();
     Center = new PVector(TR.x + (Dimensions.x /2),TR.y + (Dimensions.y /2));
   }
   public void update(){
@@ -74,26 +76,14 @@
           return;
       }
       sys.ObservingObjects.add(this);
-      if (TR.x + sys.Camera.x < 0){
-        if (Dimensions.x + TR.x +sys.Camera.x > width){
-          rect(-sys.Camera.x,TR.y,width,Dimensions.y);
-        }else{
-          rect(-sys.Camera.x,TR.y,Dimensions.x + (TR.x + sys.Camera.x),Dimensions.y);
-        }
-        return;
-      }
-      if (Dimensions.x + TR.x +sys.Camera.x > width){
-        rect(TR.x,TR.y,(-TR.x -sys.Camera.x)+width,Dimensions.y);
-        return;
-      }
-      rect(TR.x,TR.y,Dimensions.x,Dimensions.y);
+      shape(box);
   }
   public void checkRespawn(){
     if ( TR.y > sys.BoundBR.y || TR.x > sys.BoundBR.x || TR.y < sys.BoundTL.y || TR.x < sys.BoundTL.x){
       Movement.x = 0;
       Movement.y =0;
-      TR.x = 600;
-      TR.y = 500;
+      TR.x = sys.player.spawnPoint.x;
+      TR.y = sys.player.spawnPoint.y;
       Movement.x = 0;
       Movement.y =  0;
       sys.center = 0.0;
@@ -119,6 +109,9 @@
          }else{
            forceY = (TR.y + Dimensions.y) - other.TR.y ;
            if ( !(abs ((other.TR.x + other.Dimensions.x) - TR.x) < 2) && !(abs ((TR.x + Dimensions.x) - other.TR.x) < 2) && other.TR.y - (TR.y + Dimensions.y) >= -1 ){ 
+             if (!jumpBefore){
+               Movement.x *= 0.3;
+             }
              canJump = true;
              hit = true;
            }else{
@@ -150,5 +143,14 @@
   private void applyMovement(){
     TR.add(Movement);
     Center.add(Movement);
-  } 
+  }
+  public void setShape(){
+    box = createShape();
+    box.beginShape();
+    box.vertex(TR.x,TR.y);
+    box.vertex(TR.x + Dimensions.x, TR.y);
+    box.vertex(TR.x + Dimensions.x, TR.y + Dimensions.y);
+    box.vertex(TR.x , TR.y+Dimensions.y);
+    box.endShape(CLOSE);
+  }
 }

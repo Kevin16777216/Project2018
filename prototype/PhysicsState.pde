@@ -21,6 +21,7 @@ private class PhysicsState extends State{
     this.level = level;
     try{
       loadData(level);
+      image(background,int(background.width * BackgroundShift.x), int(background.height * BackgroundShift.y));
     }catch (Exception e){
       println(e);
       System.out.println("Exception occurred");
@@ -33,11 +34,13 @@ private class PhysicsState extends State{
     ObservingObjects.clear();
     float jx = int(Camera.x/60);
     float jy = int(Camera.y/60);
-    Background.beginDraw();
+    /*Background.beginDraw();
     pushMatrix();
     image(background,jx+int(background.width * BackgroundShift.x),jy + int(background.height * BackgroundShift.y));
+    //image(get(int(jx+int(background.width * BackgroundShift.x)),int(jy + int(background.height * BackgroundShift.y)),width,height),0,0);
     popMatrix();
-    Background.endDraw();
+    Background.endDraw();*/
+    //image(background,jx+int(background.width * BackgroundShift.x),jy + int(background.height * BackgroundShift.y));
     Middleground.beginDraw(); 
     pushMatrix();
     translate(Camera.x, Camera.y);
@@ -47,6 +50,7 @@ private class PhysicsState extends State{
     for (Physical i : MovingObjects){
       i.update();
       i.hit = false;
+      i.jumpBefore = i.canJump;
       i.canJump = false;
       for( Box k : ObservingObjects){
           i.checkCollision(k);
@@ -54,6 +58,7 @@ private class PhysicsState extends State{
       if (i == player.getBox()){
           player.getBox().checkRespawn();
       }
+      i.setShape();
       i.render();
     }
     float j = (player.getBox().TR.x+center+(player.getBox().Dimensions.x/2) - width/2.0 );
@@ -109,7 +114,9 @@ private class PhysicsState extends State{
     BackgroundShift = new PVector( float(DaDAB[0]),float( DaDAB[1]));
     BackgroundScale = new PVector( int(DaDAB[2]), int(DaDAB[3]));
     background.resize(width*int(BackgroundScale.x), height*int(BackgroundScale.y));
-    
+    //TODO: Update loading default
+    BoundTL = new PVector(-500,-20000);
+    BoundBR = new PVector(20000,2000);    
     player = new Player(MovingObjects.get(0));
     
   }
@@ -120,5 +127,5 @@ public interface Constants{
   double bounce = 1;
   double friction = 0.95;
   double airResistance = 0.04;
-  double terminalVelocity = 24;
+  double terminalVelocity = 14;
 }

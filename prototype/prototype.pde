@@ -23,7 +23,7 @@ void setup(){
   frameRate(120);
   minim = new Minim(this);
   //GameAudio.play("pink floyd","A");
-  GameAudio.play("credits","A");
+  //GameAudio.play("credits","A");
 }
 void draw(){
   clear();
@@ -36,7 +36,7 @@ void draw(){
     //println (p);
     g = p;
   }
-  //println (p);
+  println (p);
 }
 public AudioPlayer getSound(String m){
   audio = minim.loadFile(m);
@@ -95,7 +95,7 @@ public class MainState{
       case "l":
         return new LoadingState(this,ID);
       case "p":
-        return new PhysicsState(this,ID);
+        return new PhysicsState(this,-1);
     }
     return new PhysicsState(this,ID);
   }
