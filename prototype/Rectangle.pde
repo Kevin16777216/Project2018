@@ -89,7 +89,7 @@
       rect(TR.x,TR.y,Dimensions.x,Dimensions.y);
   }
   public void checkRespawn(){
-    if ( TR.y > 2000 ){
+    if ( TR.y > sys.BoundBR.y || TR.x > sys.BoundBR.x || TR.y < sys.BoundTL.y || TR.x < sys.BoundTL.x){
       Movement.x = 0;
       Movement.y =0;
       TR.x = 600;

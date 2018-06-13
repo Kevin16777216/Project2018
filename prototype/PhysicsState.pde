@@ -3,6 +3,8 @@ private class PhysicsState extends State{
   public Player player;
   public ArrayList<Box> ObservingObjects = new ArrayList<Box>();
   public ArrayList<Box> MovingObjects = new ArrayList<Box>();
+  Node Quadtree;
+  PVector BoundTL,BoundBR;
   PImage background;
   PGraphics Background = createGraphics(width,height);
   PVector BackgroundScale = new PVector(3,3);
@@ -81,6 +83,8 @@ private class PhysicsState extends State{
       MovingObjects.add(new Box(new PVector(width/2 - 50,600-(i*200)),new PVector(100,200),true,this));
     }
     player = new Player(MovingObjects.get(0));
+    BoundTL = new PVector(-500,-20000);
+    BoundBR = new PVector(20000,2000);
   }
   private void loadData(int p){
     String a = Integer.toString(p);
